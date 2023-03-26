@@ -19,7 +19,7 @@ public class DTABfValidatorRunner implements Callable<Integer> {
     /**
      * the file name for the error map serialization
      */
-    @Parameters(description = "the directories to process", defaultValue = "/home/bfi/src/Editionen-evaluation-dtabf/projekte/SUB-bdn/data")
+    @Parameters(description = "the directories to process", arity = "1..*")
     List<String> directories;
 
     @Option(names = "--error-file", description = "the file name stem for logs (default: ${DEFAULT-VALUE}.json,  ${DEFAULT-VALUE}.md)", defaultValue = "errors")
