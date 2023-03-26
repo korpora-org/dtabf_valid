@@ -11,7 +11,7 @@ mvn package dependency:copy-dependencies
 Run with
 
 ```sh
-      java -jar target/dtabf-valid-0.1-SNAPSHOT.jar ../SUB-bdn/data
+java -jar target/dtabf-valid-0.1-SNAPSHOT.jar ../SUB-bdn/data
 ```
 
 The program produces two files:
