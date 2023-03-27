@@ -25,6 +25,11 @@ public class DTABfValidatorRunner implements Callable<Integer> {
     @Option(names = "--error-file", description = "the file name stem for logs (default: ${DEFAULT-VALUE}.json,  ${DEFAULT-VALUE}.md)", defaultValue = "errors")
     String errorFile;
 
+    @Option(names = "--manuscript", description = "use schema of DTABf for manuscripts, instead of standard schema for prints")
+    boolean manuscript;
+
+    @Option(names = {"--full-error-list", "--full-list", "--full"}, description = "use schema of DTABf for manuscripts, instead of standard schema for prints")
+    boolean fullErrorList;
 
     /**
      * run validation
@@ -38,7 +43,7 @@ public class DTABfValidatorRunner implements Callable<Integer> {
 
     @Override
     public Integer call() {
-        DTABfValidator vali = new DTABfValidator(false);
+        DTABfValidator vali = new DTABfValidator(fullErrorList, manuscript);
         directories.forEach(vali::processDir);
         try {
             vali.writeErrorMap(errorFile);

@@ -61,7 +61,7 @@ public class DTABfValidator {
      * @param fullErrorList whether to build a full error list or only new errors when going from
      *                      file to file.
      */
-    public DTABfValidator(boolean fullErrorList) {
+    public DTABfValidator(boolean fullErrorList, boolean manuscript) {
         System.setProperty(
                 SchemaFactory.class.getName() + ":"
                         + XMLConstants.RELAXNG_NS_URI,
@@ -72,7 +72,10 @@ public class DTABfValidator {
         if (!schemaTron.isValidSchematron())
             throw new IllegalArgumentException("Invalid Schematron!");
         try {
-            Schema schema = schemaFactory.newSchema(new URL(
+            Schema schema = schemaFactory.newSchema(manuscript
+                    ? new URL(
+                    "https://www.deutschestextarchiv.de/basisformat_ms.rng")
+                    : new URL(
                     "https://www.deutschestextarchiv.de/basisformat.rng"));
             validator = schema.newValidator();
             handi = new CollectingErrorHandler(
