@@ -18,7 +18,7 @@
     <junit.subversion>9.2</junit.subversion>
     <junit.version>5.${junit.subversion}</junit.version>
     <junit.aux.version>1.${junit.subversion}</junit.aux.version>
-    <saxon.version>12.0</saxon.version>
+    <saxon.version>12.1</saxon.version>
     <ph.version>7.1.0</ph.version>
     <javadoc.opts>-Xdoclint:none</javadoc.opts>
   </properties>
@@ -181,7 +181,7 @@
     <dependency>
       <groupId>com.sun.xml.bind</groupId>
       <artifactId>jaxb-impl</artifactId>
-      <version>4.0.1</version>
+      <version>4.0.2</version>
       <scope>runtime</scope>
     </dependency>
     <!-- https://mvnrepository.com/artifact/org.relaxng/jing -->
