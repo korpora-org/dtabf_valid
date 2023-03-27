@@ -51,9 +51,9 @@ public class DTABfValidator {
     private final Map<Path, Map<String, ErrorInfo>> errorMap = new HashMap<>();
     private List<String> messages = new ArrayList<>();
 
-    private Logger logger = LoggerFactory
+    private final Logger logger = LoggerFactory
             .getLogger(DTABfValidator.class.getSimpleName());
-    private CollectingErrorHandler handi;
+    private CollectingErrorHandler handler;
 
     /**
      * a validator against the DTABF schema and Schematron rules
@@ -78,9 +78,9 @@ public class DTABfValidator {
                     : new URL(
                     "https://www.deutschestextarchiv.de/basisformat.rng"));
             validator = schema.newValidator();
-            handi = new CollectingErrorHandler(
+            handler = new CollectingErrorHandler(
                     fullErrorList);
-            validator.setErrorHandler(handi);
+            validator.setErrorHandler(handler);
         } catch (SAXException | IOException e) {
             throw new RuntimeException(e);
         }
@@ -123,25 +123,25 @@ public class DTABfValidator {
             SAXSource src = new SAXSource(spf.newSAXParser().getXMLReader(),
                     new InputSource(new BOMInputStream(
                             new FileInputStream(path.toFile()))));
-            handi = (CollectingErrorHandler) validator
+            handler = (CollectingErrorHandler) validator
                     .getErrorHandler();
             List<String> lines = Files.readAllLines(path);
-            handi.setCurrentLines(lines);
+            handler.setCurrentLines(lines);
             validator.validate(src);
             Source domSource = new DOMSource(XMLUtilities.parseXML(path.toFile()));
             SchematronOutputType tronResult = schemaTron
                     .applySchematronValidationToSVRL(domSource);
             ICommonsList<SVRLFailedAssert> tronFailures = SVRLHelper
                     .getAllFailedAssertions(tronResult);
-            tronFailures.forEach(f -> handi.addErrorInfo(
+            tronFailures.forEach(f -> handler.addErrorInfo(
                     StringUtils.normalizeSpace(f.getText()),
                     ErrorType.SchemaTron, 0, 0, null));
             for (ErrorType type : ErrorType.values()) {
                 List<Map.Entry<String, ErrorInfo>> eList =
-                        handi.getErrorsByType(type);
+                        handler.getErrorsByType(type);
                 teeScreenLog(
                         String.format("## %s %s error%s",
-                                eList.size() == 0 ? "No" : Integer.toString(eList.size()),
+                                eList.isEmpty() ? "No" : Integer.toString(eList.size()),
                                 type,
                                 eList.size() > 1 ? "s" : ""));
                 eList.stream().sorted(Comparator.comparing(Map.Entry::getKey))
@@ -233,7 +233,7 @@ public class DTABfValidator {
         /**
          * the list of simple errors, just for convenience
          */
-        private List<SAXParseException> errors; // TODO: get rid of?
+        private List<SAXParseException> errors;
         /**
          * the list of error messages to be ignored
          */
@@ -367,7 +367,7 @@ public class DTABfValidator {
                 ErrorType type) {
             return errorMap.entrySet().stream()
                     .filter(e -> e.getValue().type == type)
-                    .collect(Collectors.toList());
+                    .toList();
 
         }
 

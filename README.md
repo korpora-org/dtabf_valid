@@ -2,7 +2,7 @@
 
 This validator for DTABf ([DTA-Basisformat](https://www.deutschestextarchiv.de/doku/basisformat/)) was originally developed in [CLARIAH-DE](https://www.clariah.de/edieren-annotieren) for evaluating the DTABf as a format for editions (see paper below for the context).
 
-It runs with Java 11+. Build with
+It runs with Java 17+. Build with
 
 ```sh
 mvn package dependency:copy-dependencies
