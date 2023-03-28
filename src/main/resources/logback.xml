@@ -3,16 +3,19 @@
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
-        <!--charset>UTF-8</charset--><!-- not windowsable -->
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>INFO</level>
         </filter>
-        <encoder>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <outputPatternAsHeader>true</outputPatternAsHeader>
+            <charset>UTF-8</charset><!-- not windowsable -->
+            <!-- To get correct output, consider
+            https://stackoverflow.com/questions/57131654/using-utf-8-encoding-chcp-65001-in-command-prompt-windows-powershell-window
+            -->
             <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{60} - %msg%n</pattern>
         </encoder>
     </appender>
     <appender name="FILE" class="ch.qos.logback.core.FileAppender">
-        <charset>UTF-8</charset>
         <file>dtabfvalidator.log</file>
         <append>false</append>
         <!-- set immediateFlush to false for much higher logging throughput -->
@@ -23,6 +26,7 @@
             <level>DEBUG</level>
         </filter>
         <encoder>
+            <charset>UTF-8</charset>
             <pattern>[%d{HH:mm:ss.SSS}] %-4relative [%thread] %-5level %logger{60} - %msg%n</pattern>
         </encoder>
     </appender>

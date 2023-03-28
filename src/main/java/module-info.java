@@ -10,7 +10,6 @@ module dtabfvalid {
     requires org.korpora.useful;
     requires org.slf4j;
     requires info.picocli;
-    requires java.base;
 
     exports de.ids.mannheim.clarin.tools.dtabf
             to com.fasterxml.jackson.databind;

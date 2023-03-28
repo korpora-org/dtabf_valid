@@ -1,14 +1,13 @@
 package de.ids.mannheim.clarin.tools.dtabf;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.List;
-import java.util.concurrent.Callable;
-
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
+
+import java.io.IOException;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 /**
  * runs DTABf validation on argument and writes errors to

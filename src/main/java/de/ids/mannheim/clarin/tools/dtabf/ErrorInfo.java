@@ -86,16 +86,16 @@ public class ErrorInfo {
         @Override
         public Occurrence deserialize(JsonParser jp,
                                       DeserializationContext ctxt)
-                throws IOException, JsonProcessingException {
+                throws IOException {
             JsonNode node = jp.getCodec().readTree(jp);
             JsonNode lineNode = node.get("line");
             JsonNode colNode = node.get("col");
             JsonNode offendingNode = node.get("offendingLine");
             int col = colNode != null
-                    ? (Integer) ((IntNode) colNode).numberValue()
+                    ? (Integer) colNode.numberValue()
                     : 0;
             int line = lineNode != null
-                    ? (Integer) ((IntNode) lineNode).numberValue()
+                    ? (Integer) lineNode.numberValue()
                     : 0;
             String offendingLine = offendingNode != null
                     ? offendingNode.asText()
@@ -108,7 +108,7 @@ public class ErrorInfo {
     @JsonSerialize(using = OccurrenceSerializer.class)
     @JsonDeserialize(using = OccurrenceDeserializer.class)
 
-    public static record Occurrence(
+    public record Occurrence(
             int line,
             int col,
             String offendingLine

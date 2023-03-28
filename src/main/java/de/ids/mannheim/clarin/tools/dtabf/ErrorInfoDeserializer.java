@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class ErrorInfoDeserializer extends StdDeserializer<ErrorInfo> {
 
-    private static ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper mapper = new ObjectMapper();
 
     public ErrorInfoDeserializer() {
         this(null);
@@ -30,7 +30,7 @@ public class ErrorInfoDeserializer extends StdDeserializer<ErrorInfo> {
 
     @Override
     public ErrorInfo deserialize(JsonParser jp, DeserializationContext ctxt)
-            throws IOException, JsonProcessingException {
+            throws IOException {
         JsonNode node = jp.getCodec().readTree(jp);
         ErrorType errorType = ErrorType.valueOf(node.get("type").asText());
         ArrayNode occurrencesN = (ArrayNode) node.get("occurrences");

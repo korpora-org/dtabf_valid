@@ -144,7 +144,7 @@ public class DTABfValidator {
                                 eList.isEmpty() ? "No" : Integer.toString(eList.size()),
                                 type,
                                 eList.size() > 1 ? "s" : ""));
-                eList.stream().sorted(Comparator.comparing(Map.Entry::getKey))
+                eList.stream().sorted(Map.Entry.comparingByKey())
                         .forEach(e -> teeScreenLog(String.format("- %s [%d×]",
                                 e.getKey(), e.getValue().size())));
             }
